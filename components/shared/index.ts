@@ -1,3 +1,4 @@
+export { SearchInput } from "./search-input";
 export { ProductCard } from "./product-card";
 export { TopBar } from "./top-bar";
 export { SortPopup } from "./sort-popup";

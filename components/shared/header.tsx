@@ -2,8 +2,9 @@ import React from "react";
 import Image from "next/image";
 import { ArrowRight, ShoppingCart, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Container } from "./index";
+import { Container, SearchInput } from "./index";
 import { Button } from "../ui";
+import Link from "next/link";
 
 interface Props {
     className?: string;
@@ -13,22 +14,22 @@ export const Header: React.FC<Props> = ({ className }) => {
     return (
         <header className={cn("border border-b", className)}>
             <Container className="flex item justify-between py-8">
-                <div className="flex items-center gap-4">
-                    <Image src="/logo.png" alt="Logo" width={35} height={35} />
-                    <div>
-                        <h1 className="text-2xl uppercase font-black">
-                            Next Pizza
-                        </h1>
-                        <p className="text-sm text-gray-400 leading-3">
-                            вкуснее уже некуда
-                        </p>
+                <Link href={"/"}>
+                    <div className="flex items-center gap-4">
+                        <Image src="/logo.png" alt="Logo" width={35} height={35} />
+                        <div>
+                            <h1 className="text-2xl uppercase font-black">Next Pizza</h1>
+                            <p className="text-sm text-gray-400 leading-3">вкуснее уже некуда</p>
+                        </div>
                     </div>
+                </Link>
+
+                <div className="mx-10 flex-1">
+                    <SearchInput />
                 </div>
+
                 <div className="flex items-center gap-3">
-                    <Button
-                        className="flex items-center gap-1"
-                        variant="outline"
-                    >
+                    <Button className="flex items-center gap-1" variant="outline">
                         <User size={16} />
                         Войти
                     </Button>
@@ -37,11 +38,7 @@ export const Header: React.FC<Props> = ({ className }) => {
                             <b>520 ₽</b>
                             <span className="h-full w-[1px] bg-white/30 mx-3"></span>
                             <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
-                                <ShoppingCart
-                                    size={16}
-                                    className="relative"
-                                    strokeWidth={2}
-                                />
+                                <ShoppingCart size={16} className="relative" strokeWidth={2} />
                                 <b>3</b>
                             </div>
                             <ArrowRight
