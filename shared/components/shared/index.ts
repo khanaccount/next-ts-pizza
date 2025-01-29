@@ -1,3 +1,5 @@
+export { CartDrawer } from "./cart-drawer";
+export { CartButton } from "./cart-button";
 export { IngredientItem } from "./ingredient-item";
 export { SearchInput } from "./search-input";
 export { ProductCard } from "./product-card";
