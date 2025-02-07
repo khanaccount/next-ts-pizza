@@ -42,3 +42,39 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
         return NextResponse.json({ message: "Server error]" }, { status: 500 });
     }
 }
+
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+    try {
+        const { id } = await params;
+
+        const itemId = Number(id);
+        const token = req.cookies.get("cartToken")?.value;
+
+        if (!token) {
+            return NextResponse.json({ error: "Cart token not found" });
+        }
+
+        const cartItem = await prisma.cartItem.findFirst({
+            where: {
+                id: itemId,
+            },
+        });
+
+        if (!cartItem) {
+            return NextResponse.json({ error: "Cart item not found" });
+        }
+
+        await prisma.cartItem.delete({
+            where: {
+                id: itemId,
+            },
+        });
+
+        const updatedUserCart = await updateCartTotalAmount(token);
+
+        return NextResponse.json(updatedUserCart);
+    } catch (err) {
+        console.log(err);
+        return NextResponse.json({ message: "[CART_DELETE] Server error" }, { status: 500 });
+    }
+}

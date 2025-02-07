@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { useSearchParams } from "next/navigation";
 import { useSet } from "react-use";
@@ -38,7 +39,9 @@ export const useFilters = (): ReturnProps => {
     );
 
     const [pizzaTypes, { toggle: tooglePizzaTypes }] = useSet(
-        new Set<string>(searchParams.has("pizzaTypes") ? searchParams.get("pizzaTypes")?.split("") : [])
+        new Set<string>(
+            searchParams.has("pizzaTypes") ? searchParams.get("pizzaTypes")?.split("") : []
+        )
     );
 
     const [prices, setPrices] = React.useState<PropsRangeSlider>({
@@ -53,14 +56,17 @@ export const useFilters = (): ReturnProps => {
         }));
     };
 
-    return {
-        sizes,
-        pizzaTypes,
-        selectedIngredients,
-        prices,
-        setPrices: setPriceRange,
-        setPizzaTypes: tooglePizzaTypes,
-        setSizes: toggleSizes,
-        setSelectedIngredients: toggleIngredients,
-    };
+    return React.useMemo(
+        () => ({
+            sizes,
+            pizzaTypes,
+            selectedIngredients,
+            prices,
+            setPrices: setPriceRange,
+            setPizzaTypes: tooglePizzaTypes,
+            setSizes: toggleSizes,
+            setSelectedIngredients: toggleIngredients,
+        }),
+        [sizes, pizzaTypes, selectedIngredients, prices]
+    );
 };

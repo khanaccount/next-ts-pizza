@@ -59,7 +59,8 @@ async function up() {
     const pizza1 = await prisma.product.create({
         data: {
             name: "Пепперони фреш",
-            imageUrl: "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp",
+            imageUrl:
+                "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp",
             categoryId: 1,
             ingredients: {
                 connect: _ingredients.slice(0, 5),
@@ -70,7 +71,8 @@ async function up() {
     const pizza2 = await prisma.product.create({
         data: {
             name: "Сырная",
-            imageUrl: "https://media.dodostatic.net/image/r:233x233/11EE7D610CF7E265B7C72BE5AE757CA7.webp",
+            imageUrl:
+                "https://media.dodostatic.net/image/r:233x233/11EE7D610CF7E265B7C72BE5AE757CA7.webp",
             categoryId: 1,
             ingredients: {
                 connect: _ingredients.slice(5, 10),
@@ -81,7 +83,8 @@ async function up() {
     const pizza3 = await prisma.product.create({
         data: {
             name: "Чоризо фреш",
-            imageUrl: "https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp",
+            imageUrl:
+                "https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp",
             categoryId: 1,
             ingredients: {
                 connect: _ingredients.slice(10, 40),
@@ -135,12 +138,12 @@ async function up() {
             {
                 userId: 1,
                 totalAmount: 0,
-                token: "11111",
+                tokenId: "11111",
             },
             {
                 userId: 2,
                 totalAmount: 0,
-                token: "222222",
+                tokenId: "222222",
             },
         ],
     });

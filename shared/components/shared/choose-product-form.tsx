@@ -6,13 +6,21 @@ import { Button } from "../ui";
 interface Props {
     imageUrl: string;
     name: string;
+    price: number;
+    loading?: boolean | undefined;
     onClickAdd?: VoidFunction;
+    onSubmit?: (productItemId: number, ingredients: number[]) => void;
     className?: string;
 }
 
-export const ChooseProductForm = ({ name, imageUrl, className }: Props) => {
-    const textDetaills = "30 см, традиционное тесто 30";
-    const totalPrice = "350";
+export const ChooseProductForm = ({
+    name,
+    imageUrl,
+    price,
+    onSubmit,
+    className,
+    loading,
+}: Props) => {
     return (
         <div className={cn(className, "flex flex-1")}>
             <div className="flex items-center justify-center flex-1 relative w-full">
@@ -27,10 +35,12 @@ export const ChooseProductForm = ({ name, imageUrl, className }: Props) => {
             <div className="w-[490px] bg-[#f8f8f8] p-7">
                 <Title text={name} size="md" className="font-extrabold mb-1" />
 
-                <p className="text-gray-400">{textDetaills}</p>
-
-                <Button className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10">
-                    Добавить в корзину за {totalPrice} ₽
+                <Button
+                    loading={loading}
+                    onClick={() => onSubmit?.()}
+                    className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
+                >
+                    Добавить в корзину за {price} ₽
                 </Button>
             </div>
         </div>

@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-
 import { cn } from "@/shared/lib/utils";
-import { Dialog, DialogContent } from "@/shared/components/ui/dialog";
-import { useRouter } from "next/navigation";
-import { ChooseProductForm } from "../index";
+import { Dialog, DialogContent, DialogTitle } from "@/shared/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+
 import { ProductWithRelations } from "@/@types/prisma";
-import { ChoosePizzaForm } from "../choose-pizza-form";
+import { ProductForm } from "../product-form";
+import { useRouter } from "next/navigation";
 
 interface Props {
     product: ProductWithRelations;
@@ -16,10 +16,12 @@ interface Props {
 
 export const ChooseProductModal = ({ product, className }: Props) => {
     const router = useRouter();
-    const isPizzaForm = Boolean(product.items[0].pizzaType);
 
+    const onCloseModal = () => {
+        router.back();
+    };
     return (
-        <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
+        <Dialog open={Boolean(product)} onOpenChange={onCloseModal}>
             <DialogContent
                 aria-describedby={undefined}
                 className={cn(
@@ -27,16 +29,10 @@ export const ChooseProductModal = ({ product, className }: Props) => {
                     className
                 )}
             >
-                {isPizzaForm ? (
-                    <ChoosePizzaForm
-                        imageUrl={product.imageUrl}
-                        name={product.name}
-                        ingredients={product.ingredients}
-                        items={product.items}
-                    />
-                ) : (
-                    <ChooseProductForm imageUrl={product.imageUrl} name={product.name} />
-                )}
+                <VisuallyHidden>
+                    <DialogTitle>Выберите продукт</DialogTitle>
+                </VisuallyHidden>
+                <ProductForm product={product} onSubmit={() => router.back()} />
             </DialogContent>
         </Dialog>
     );

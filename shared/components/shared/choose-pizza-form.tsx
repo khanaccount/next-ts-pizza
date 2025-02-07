@@ -15,7 +15,7 @@ interface Props {
     ingredients: Ingredient[];
     items: ProductItem[];
     loading?: boolean;
-    onClickAddCart?: VoidFunction;
+    onSubmit: (itemId: number, ingredients: number[]) => void;
 }
 
 export const ChoosePizzaForm = ({
@@ -24,10 +24,19 @@ export const ChoosePizzaForm = ({
     imageUrl,
     ingredients,
     className,
-    onClickAddCart,
+    loading,
+    onSubmit,
 }: Props) => {
-    const { size, addIngredient, availableSizes, selectedIngredients, setSize, setType, type } =
-        usePizzaOptions(items);
+    const {
+        size,
+        addIngredient,
+        availableSizes,
+        selectedIngredients,
+        currentItemId,
+        setSize,
+        setType,
+        type,
+    } = usePizzaOptions(items);
     const { totalPrice, textDetaills } = getPizzaDetails(
         type,
         size,
@@ -37,8 +46,9 @@ export const ChoosePizzaForm = ({
     );
 
     const handleClickAdd = () => {
-        onClickAddCart?.();
-        console.log({ size, type, ingredients: selectedIngredients });
+        if (currentItemId) {
+            onSubmit(currentItemId, Array.from(selectedIngredients));
+        }
     };
 
     return (
@@ -79,6 +89,7 @@ export const ChoosePizzaForm = ({
                 </div>
 
                 <Button
+                    loading={loading}
                     onClick={handleClickAdd}
                     className="h-[55px] px-10 text-base rounded-[18px] w-full mt-10"
                 >

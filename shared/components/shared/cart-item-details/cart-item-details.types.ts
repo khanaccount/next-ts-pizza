@@ -6,4 +6,5 @@ export interface CartItemProps {
     quantity: number;
     details: string;
     className?: string;
+    disabled?: boolean;
 }
